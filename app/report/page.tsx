@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use client'
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
@@ -260,3 +261,6 @@ ${courseRevenue}
     </div>
   )
 }
+=======
+
+>>>>>>> 87d9eb0287591b0e003771fd4cb581ec973c5e10
