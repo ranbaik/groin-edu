@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 'use client'
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
@@ -61,7 +60,7 @@ export default function AdminPage() {
     })
   }, [])
 
-  // 필터링
+  // ?�터�?
   const filtered = enrollments.filter(e => {
     const matchSearch = !search ||
       e.student_name?.includes(search) ||
@@ -72,14 +71,14 @@ export default function AdminPage() {
     return matchSearch && matchStatus
   })
 
-  // 통계 계산
+  // ?�계 계산
   const totalRevenue  = enrollments.filter(e => e.status === 'paid').reduce((s, e) => s + (e.payment_amount || 0), 0)
   const totalStudents = enrollments.length
   const paidCount     = enrollments.filter(e => e.status === 'paid').length
 
-  // CSV 다운로드
+  // CSV ?�운로드
   function downloadCSV() {
-    const headers = ['등록번호', '이름', '이메일', '연락처', '과정명', '결제금액', '결제방법', '상태', '신청일']
+    const headers = ['?�록번호', '?�름', '?�메??, '?�락�?, '과정�?, '결제금액', '결제방법', '?�태', '?�청??]
     const rows = filtered.map(e => [
       e.reg_number, e.student_name, e.email, e.phone,
       e.course_title, e.payment_amount, e.payment_method, e.status,
@@ -89,14 +88,14 @@ export default function AdminPage() {
     const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' })
     const url  = URL.createObjectURL(blob)
     const a    = document.createElement('a'); a.href = url
-    a.download = `그로인_수강생_${new Date().toLocaleDateString('ko-KR')}.csv`
+    a.download = `그로???�강??${new Date().toLocaleDateString('ko-KR')}.csv`
     a.click(); URL.revokeObjectURL(url)
   }
 
   const statusBadge = (s: string) => {
     const map: Record<string, {bg:string;color:string;label:string}> = {
-      paid:    {bg:'rgba(77,208,225,0.15)',  color:'#4dd0e1', label:'결제완료'},
-      pending: {bg:'rgba(255,213,79,0.15)',  color:'#ffd54f', label:'대기중'},
+      paid:    {bg:'rgba(77,208,225,0.15)',  color:'#4dd0e1', label:'결제?�료'},
+      pending: {bg:'rgba(255,213,79,0.15)',  color:'#ffd54f', label:'?�기중'},
       cancel:  {bg:'rgba(239,154,154,0.15)', color:'#ef9a9a', label:'취소'},
     }
     const b = map[s] || map.pending
@@ -112,28 +111,28 @@ export default function AdminPage() {
           <a href="/" style={{display:'flex',alignItems:'center',gap:10,textDecoration:'none'}}>
             <div style={{width:36,height:36,borderRadius:8,background:`linear-gradient(135deg,${C.accent},${C.accent2})`,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:900,fontSize:16,color:'#0f2027',fontFamily:'monospace'}}>G</div>
             <div>
-              <div style={{fontWeight:900,fontSize:15,color:C.white}}>주식회사 그로인</div>
+              <div style={{fontWeight:900,fontSize:15,color:C.white}}>주식?�사 그로??/div>
               <div style={{fontSize:9,color:C.accent,letterSpacing:2,fontWeight:700}}>ADMIN DASHBOARD</div>
             </div>
           </a>
         </div>
         <div style={{display:'flex',gap:8,alignItems:'center'}}>
-          <a href="/" style={{padding:'6px 16px',borderRadius:6,fontSize:12,fontWeight:700,color:C.muted,border:`1px solid ${C.border}`,textDecoration:'none'}}>← 수강 신청 페이지</a>
+          <a href="/" style={{padding:'6px 16px',borderRadius:6,fontSize:12,fontWeight:700,color:C.muted,border:`1px solid ${C.border}`,textDecoration:'none'}}>???�강 ?�청 ?�이지</a>
           <button onClick={downloadCSV} style={{padding:'6px 16px',borderRadius:6,fontSize:12,fontWeight:700,background:`linear-gradient(135deg,${C.accent},${C.accent2})`,color:'#0f2027',border:'none',cursor:'pointer'}}>
-            📥 CSV 다운로드
+            ?�� CSV ?�운로드
           </button>
         </div>
       </header>
 
       <div style={{maxWidth:1200,margin:'0 auto',padding:'40px 24px'}}>
 
-        {/* 통계 카드 4개 */}
+        {/* ?�계 카드 4�?*/}
         <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginBottom:32}}>
           {[
-            ['👥', '전체 수강생', totalStudents + '명', C.accent],
-            ['✅', '결제 완료',   paidCount + '명',     C.accent2],
-            ['💰', '총 매출',     '₩' + totalRevenue.toLocaleString(), C.gold],
-            ['📚', '개설 과정',   stats.length + '개',  C.accent],
+            ['?��', '?�체 ?�강??, totalStudents + '�?, C.accent],
+            ['??, '결제 ?�료',   paidCount + '�?,     C.accent2],
+            ['?��', '�?매출',     '?? + totalRevenue.toLocaleString(), C.gold],
+            ['?��', '개설 과정',   stats.length + '�?,  C.accent],
           ].map(([icon, label, value, color]) => (
             <div key={String(label)} style={{background:C.cardBg,border:`1px solid ${C.border}`,borderRadius:12,padding:'20px 22px'}}>
               <div style={{fontSize:22,marginBottom:8}}>{icon}</div>
@@ -143,9 +142,9 @@ export default function AdminPage() {
           ))}
         </div>
 
-        {/* 탭 */}
+        {/* ??*/}
         <div style={{display:'flex',gap:8,marginBottom:20}}>
-          {([['list','수강생 목록'],['stats','과정별 통계']] as [string,string][]).map(([t,l]) => (
+          {([['list','?�강??목록'],['stats','과정�??�계']] as [string,string][]).map(([t,l]) => (
             <div key={t} onClick={()=>setTab(t as 'list'|'stats')}
               style={{padding:'8px 20px',borderRadius:6,fontSize:13,fontWeight:700,cursor:'pointer',
                 background:tab===t?C.accent:'transparent',
@@ -156,43 +155,43 @@ export default function AdminPage() {
           ))}
         </div>
 
-        {/* 수강생 목록 탭 */}
+        {/* ?�강??목록 ??*/}
         {tab === 'list' && (
           <>
-            {/* 검색 + 필터 */}
+            {/* 검??+ ?�터 */}
             <div style={{display:'flex',gap:10,marginBottom:16}}>
               <input
-                placeholder="이름, 이메일, 과정명, 등록번호 검색..."
+                placeholder="?�름, ?�메?? 과정�? ?�록번호 검??.."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 style={{flex:1,background:'rgba(255,255,255,0.05)',border:`1px solid ${C.border}`,borderRadius:8,padding:'10px 14px',fontSize:13,color:C.white,outline:'none'}}
               />
               <select value={filterStatus} onChange={e=>setFilterStatus(e.target.value)}
                 style={{background:C.cardBg,border:`1px solid ${C.border}`,borderRadius:8,padding:'10px 14px',fontSize:13,color:C.white,outline:'none',cursor:'pointer'}}>
-                <option value="all">전체 상태</option>
-                <option value="paid">결제완료</option>
-                <option value="pending">대기중</option>
+                <option value="all">?�체 ?�태</option>
+                <option value="paid">결제?�료</option>
+                <option value="pending">?�기중</option>
                 <option value="cancel">취소</option>
               </select>
             </div>
 
-            {/* 테이블 */}
+            {/* ?�이�?*/}
             <div style={{background:C.cardBg,border:`1px solid ${C.border}`,borderRadius:12,overflow:'hidden'}}>
               <div style={{overflowX:'auto'}}>
                 <table style={{width:'100%',borderCollapse:'collapse'}}>
                   <thead>
                     <tr style={{background:'rgba(255,255,255,0.04)',borderBottom:`1px solid ${C.border}`}}>
-                      {['등록번호','이름','연락처','과정명','결제금액','상태','신청일'].map(h => (
+                      {['?�록번호','?�름','?�락�?,'과정�?,'결제금액','?�태','?�청??].map(h => (
                         <th key={h} style={{padding:'12px 16px',fontSize:11,fontWeight:700,color:C.muted,textAlign:'left',letterSpacing:1,whiteSpace:'nowrap'}}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
                     {loading && (
-                      <tr><td colSpan={7} style={{padding:40,textAlign:'center',color:C.muted}}>⏳ 로딩 중...</td></tr>
+                      <tr><td colSpan={7} style={{padding:40,textAlign:'center',color:C.muted}}>??로딩 �?..</td></tr>
                     )}
                     {!loading && filtered.length === 0 && (
-                      <tr><td colSpan={7} style={{padding:40,textAlign:'center',color:C.muted}}>검색 결과가 없습니다.</td></tr>
+                      <tr><td colSpan={7} style={{padding:40,textAlign:'center',color:C.muted}}>검??결과가 ?�습?�다.</td></tr>
                     )}
                     {filtered.map((e, i) => (
                       <tr key={e.reg_number + i}
@@ -203,7 +202,7 @@ export default function AdminPage() {
                         <td style={{padding:'12px 16px',fontSize:13,fontWeight:600,color:C.white}}>{e.student_name}</td>
                         <td style={{padding:'12px 16px',fontSize:12,color:C.muted}}>{e.phone}</td>
                         <td style={{padding:'12px 16px',fontSize:12,color:C.white,maxWidth:200}}>{e.course_title}</td>
-                        <td style={{padding:'12px 16px',fontSize:13,fontWeight:700,fontFamily:'monospace',color:C.gold}}>₩{(e.payment_amount||0).toLocaleString()}</td>
+                        <td style={{padding:'12px 16px',fontSize:13,fontWeight:700,fontFamily:'monospace',color:C.gold}}>??(e.payment_amount||0).toLocaleString()}</td>
                         <td style={{padding:'12px 16px'}}>{statusBadge(e.status)}</td>
                         <td style={{padding:'12px 16px',fontSize:11,color:C.muted,whiteSpace:'nowrap'}}>{new Date(e.applied_at).toLocaleDateString('ko-KR')}</td>
                       </tr>
@@ -212,16 +211,16 @@ export default function AdminPage() {
                 </table>
               </div>
               <div style={{padding:'12px 16px',borderTop:`1px solid ${C.border}`,fontSize:12,color:C.muted}}>
-                총 {filtered.length}명 표시 중 (전체 {totalStudents}명)
+                �?{filtered.length}�??�시 �?(?�체 {totalStudents}�?
               </div>
             </div>
           </>
         )}
 
-        {/* 과정별 통계 탭 */}
+        {/* 과정�??�계 ??*/}
         {tab === 'stats' && (
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(320px,1fr))',gap:16}}>
-            {loading && <div style={{color:C.muted,padding:40}}>⏳ 로딩 중...</div>}
+            {loading && <div style={{color:C.muted,padding:40}}>??로딩 �?..</div>}
             {stats.map(s => {
               const pct = Math.round((s.enrolled||0) / (s.capacity||1) * 100)
               return (
@@ -234,19 +233,19 @@ export default function AdminPage() {
                     <div style={{display:'flex',justifyContent:'space-between',marginBottom:12}}>
                       <div style={{textAlign:'center'}}>
                         <div style={{fontFamily:'monospace',fontSize:22,fontWeight:700,color:C.accent}}>{s.enrolled||0}</div>
-                        <div style={{fontSize:11,color:C.muted}}>수강생</div>
+                        <div style={{fontSize:11,color:C.muted}}>?�강??/div>
                       </div>
                       <div style={{textAlign:'center'}}>
                         <div style={{fontFamily:'monospace',fontSize:22,fontWeight:700,color:C.accent2}}>{s.capacity||0}</div>
-                        <div style={{fontSize:11,color:C.muted}}>정원</div>
+                        <div style={{fontSize:11,color:C.muted}}>?�원</div>
                       </div>
                       <div style={{textAlign:'center'}}>
-                        <div style={{fontFamily:'monospace',fontSize:22,fontWeight:700,color:C.gold}}>₩{((s.total_revenue||0)/10000).toFixed(0)}만</div>
+                        <div style={{fontFamily:'monospace',fontSize:22,fontWeight:700,color:C.gold}}>??((s.total_revenue||0)/10000).toFixed(0)}�?/div>
                         <div style={{fontSize:11,color:C.muted}}>매출</div>
                       </div>
                     </div>
                     <div style={{fontSize:12,color:C.muted,marginBottom:5,display:'flex',justifyContent:'space-between'}}>
-                      <span>수강률</span><span style={{color:pct>80?C.gold:C.accent,fontWeight:700}}>{pct}%</span>
+                      <span>?�강�?/span><span style={{color:pct>80?C.gold:C.accent,fontWeight:700}}>{pct}%</span>
                     </div>
                     <div style={{background:'rgba(255,255,255,0.08)',borderRadius:3,height:6}}>
                       <div style={{background:pct>80?C.gold:C.accent,width:`${Math.min(100,pct)}%`,height:'100%',borderRadius:3,transition:'width 0.5s'}}/>
@@ -260,7 +259,7 @@ export default function AdminPage() {
       </div>
 
       <footer style={{background:'rgba(15,32,39,0.9)',borderTop:`1px solid ${C.border}`,textAlign:'center',padding:'20px',fontSize:12,marginTop:60,color:C.muted}}>
-        © 2026 주식회사 그로인 · 관리자 대시보드
+        © 2026 주식?�사 그로??· 관리자 ?�?�보??
       </footer>
     </div>
   )
