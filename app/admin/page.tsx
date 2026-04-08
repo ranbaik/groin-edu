@@ -78,7 +78,7 @@ export default function AdminPage() {
 
   // CSV ?�운로드
   function downloadCSV() {
-    const headers = ['?�록번호', '?�름', '?�메??, '?�락�?, '과정�?, '결제금액', '결제방법', '?�태', '?�청??]
+    const headers = ['등록번호', '이름', '이메일', '연락처', '과정명', '결제금액', '결제방법', '상태', '신청일']
     const rows = filtered.map(e => [
       e.reg_number, e.student_name, e.email, e.phone,
       e.course_title, e.payment_amount, e.payment_method, e.status,
