@@ -4,7 +4,7 @@
 // ============================================================
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { sendAllNotifications } from '../../../lib/notifications'
+import { sendAllEnrollmentNotifications } from '../../../../lib/notifications'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     if (enrollError) throw enrollError
 
     // ── 5. 이메일 + SMS 동시 발송 ──
-    const notifications = await sendAllNotifications(student, course)
+    const notifications = await sendAllEnrollmentNotifications({ student, course, enrollment: { payment_amount: amount } })
 
     // ── 6. Google Calendar 이벤트 추가 ──
     let calendarResult = { success: false, eventUrl: '' }

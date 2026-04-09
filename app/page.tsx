@@ -87,7 +87,7 @@ export default function Home() {
             <div style={{fontSize:9,color:C.accent,letterSpacing:2.5,fontWeight:700,marginTop:-1}}>GROW·IN AI EDUCATION & CONSULTING</div>
           </div>
         </a>
-        <div style={{display:'flex',gap:6}}>
+        <div style={{display:'flex',gap:6,alignItems:'center'}}>
           {(['list','form','payment'] as Step[]).map((s,i) => (
             <div key={s}
               onClick={()=>{
@@ -103,6 +103,15 @@ export default function Home() {
               {['과정선택','신청정보','결제'][i]}
             </div>
           ))}
+          <div style={{width:1,height:24,background:C.border,margin:'0 6px'}}/>
+          <a href="/admin"
+            style={{padding:'6px 14px',borderRadius:6,fontSize:11,fontWeight:700,
+              background:'rgba(255,213,79,0.12)',color:C.gold,
+              border:`1px solid rgba(255,213,79,0.3)`,
+              cursor:'pointer',transition:'all 0.15s',textDecoration:'none',
+              display:'flex',alignItems:'center',gap:5}}>
+            🔒 관리자
+          </a>
         </div>
       </header>
 
